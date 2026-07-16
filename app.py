@@ -1,9 +1,14 @@
+import streamlit as st
 import os
 import gradio as gr
 from groq import Groq
 
-# Streamlit secrets se safe key load karein
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+# Streamlit secrets se key direct load karein
+try:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+except Exception:
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+
 client = Groq(api_key=GROQ_API_KEY)
 
 def calculate_solar_system(daily_load_kwh, sun_hours, system_voltage, autonomy_days):
