@@ -3,7 +3,8 @@ import gradio as ui
 from groq import Groq
 import re
 
-GROQ_API_KEY = "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"
+# Streamlit secrets se key load karein
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
 def calculate_solar_system(daily_load_kwh, sun_hours, system_voltage, autonomy_days):
