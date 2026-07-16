@@ -1,9 +1,8 @@
 import os
-import gradio as ui
+import gradio as gr
 from groq import Groq
-import re
 
-# Streamlit secrets se key load karein
+# Streamlit secrets se safe key load karein
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
@@ -54,12 +53,13 @@ def ee_solar_agent(user_prompt):
     )
     return completion.choices[0].message.content
 
-interface = ui.Interface(
+interface = gr.Interface(
     fn=ee_solar_agent,
-    inputs=ui.Textbox(lines=3, placeholder="e.g., Design a system for 15 kWh daily load with 5.5 sun hours on a 48V system."),
-    outputs=ui.Markdown(),
+    inputs=gr.Textbox(lines=3, placeholder="e.g., Design a system for 15 kWh daily load with 5.5 sun hours on a 48V system.", label="user_prompt"),
+    outputs=gr.Markdown(label="Solar PV & Battery Bank Sizing Report"),
     title="⚡ AI-Powered Electrical Agent: Solar PV & Battery Bank Sizer",
     description="Input your load parameters and system requirements."
 )
 
-interface.launch(share=True)
+if __name__ == "__main__":
+    interface.launch()
