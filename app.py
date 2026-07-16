@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import re  # <-- Yeh zaroori hai taake re.search crash na kare
 import gradio as gr
 from groq import Groq
 
@@ -51,8 +52,9 @@ def ee_solar_agent(user_prompt):
 
     data_for_llm = f"User Request: '{user_prompt}'\nCalculated parameters: Load {load}kWh, Sun {sun}hr, Voltage {voltage}V, PV {calc_results['solar_pv_kw']}kW, Battery {calc_results['battery_bank_ah']}Ah. Generate report."
 
+    # Yahan naya model "llama-3.1-8b-instant" daal diya hai
     completion = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         messages=[{"role": "system", "content": system_instruction}, {"role": "user", "content": data_for_llm}],
         temperature=0.3
     )
@@ -66,5 +68,6 @@ interface = gr.Interface(
     description="Input your load parameters and system requirements."
 )
 
+# Yahan share=True kar diya hai taake public link lazmi banay
 if __name__ == "__main__":
-    interface.launch()
+    interface.launch(share=True)
