@@ -61,4 +61,4 @@ interface = ui.Interface(
     description="Input your load parameters and system requirements."
 )
 
-interface.launch()
+interface.launch(share=True)
